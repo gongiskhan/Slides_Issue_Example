@@ -1,0 +1,7 @@
+{
+  "name": "bubbleSheetSample",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

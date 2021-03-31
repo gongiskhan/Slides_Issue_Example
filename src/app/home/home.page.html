@@ -1,0 +1,58 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      TEST
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-slides #wizardSlider>
+    <ion-slide *ngFor="let question of questions; let i = index">
+
+      <ion-card class="question-card">
+        <ion-card-header>
+          <ion-select interface="popover"
+                      [interfaceOptions]="questionSelectOptions"
+                      [selectedText]="'Question ' + (i+1) + ' of ' + questions.length"
+                      [placeholder]="'Question ' + (i+1) + ' of ' + questions.length"
+                      (ionChange)="gotoSlide($event.target.value)">
+            <ion-select-option name="selectOptionName" *ngFor="let q of questions; let iter = index" [value]="iter" (select)="gotoSlide(iter)">
+              Q{{iter + 1}} - {{hasAnswer(q) ? 'Answered' : 'Not Answered'}}
+            </ion-select-option>
+          </ion-select>
+        </ion-card-header>
+
+        <ion-card-title>
+          Question {{i + 1}}
+        </ion-card-title>
+
+        <ion-card-content>
+          <ion-radio-group>
+            <ion-item *ngFor="let answer of questions[i].answers; let j = index">
+              {{question.answers[j].answer}}
+              <ion-radio slot="end" (click)="setAnswer(i, question.id, answer.answer, answer.rightAnswer)"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-card-content>
+
+      </ion-card>
+
+    </ion-slide>
+  </ion-slides>
+
+  <div style="position: sticky; left: 2.5%; bottom: 5%; top: 10%; z-index: 9999999; width: 95%; display: grid;">
+    <ion-fab horizontal="start" slot="fixed">
+      <ion-fab-button (click)="changeSlide(-1)">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab horizontal="end" slot="fixed">
+      <ion-fab-button (click)="changeSlide(1)">
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+
+</ion-content>
